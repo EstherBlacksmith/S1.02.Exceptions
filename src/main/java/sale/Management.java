@@ -1,3 +1,5 @@
+package sale;
+
 public class Management {
     public static void init(){
 
