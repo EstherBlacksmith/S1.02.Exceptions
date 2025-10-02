@@ -13,16 +13,8 @@ public class Sale {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
     public List <Product> getProductList() {
         return productList;
-    }
-
-    public void setProductList(List <Product> productList) {
-        this.productList = productList;
     }
 
     public void addProduct(Product product){
