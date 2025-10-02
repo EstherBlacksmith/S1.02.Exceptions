@@ -1,10 +1,11 @@
 package entry;
 
 import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Entry {
-    static Scanner inputScanner = new Scanner(System.in);
+    static Scanner inputScanner =  new Scanner(System.in).useLocale(Locale.US);
 
     static Byte readByte(String question) {
         Byte readedByte = 0;
@@ -47,13 +48,13 @@ public class Entry {
     }
 
     static Float readFloat(String question) {
-        Float readedFloat = 0f;
+        float readedFloat = 0f;
+        System.out.println(question);
 
         while (readedFloat == 0f) {
             if (inputScanner.hasNext()) {
                 try {
                     readedFloat = inputScanner.nextFloat();
-
                 } catch (InputMismatchException e) {
                     System.out.println("Incorrect type.\n" + question);
                     inputScanner.next();
