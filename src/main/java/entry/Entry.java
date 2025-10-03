@@ -5,7 +5,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class Entry {
-    static Scanner inputScanner =  new Scanner(System.in).useLocale(Locale.US);
+    static Scanner inputScanner = new Scanner(System.in).useLocale(Locale.US);
 
     static Byte readByte(String question) {
         Byte readedByte = 0;
@@ -53,15 +53,26 @@ public class Entry {
 
         while (readedFloat == 0f) {
             if (inputScanner.hasNext()) {
-                try {
-                    readedFloat = inputScanner.nextFloat();
-                } catch (InputMismatchException e) {
-                    System.out.println("Incorrect type.\n" + question);
-                    inputScanner.next();
-                }
-            }
+                String commaThrouble = null;
 
+                commaThrouble = inputScanner.findInLine("[,]+");
+
+                if ( commaThrouble!= null) {
+                    System.out.println("Format error.\n" + question);
+                    inputScanner.next();
+                }else{
+
+                    try {
+                        readedFloat = inputScanner.nextFloat();
+                    } catch (InputMismatchException e) {
+                        System.out.println("Incorrect type.\n" + question);
+                        inputScanner.next();
+                    }
+                }
+                inputScanner.nextLine();
+            }
         }
         return readedFloat;
+
     }
 }
