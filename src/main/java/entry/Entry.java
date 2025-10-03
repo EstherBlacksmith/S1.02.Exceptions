@@ -2,12 +2,15 @@ package entry;
 
 import java.util.InputMismatchException;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Scanner;
+
+import static java.lang.Boolean.parseBoolean;
 
 public class Entry {
     static Scanner inputScanner = new Scanner(System.in).useLocale(Locale.US);
 
-    private static boolean findingPatternToAvoid(){
+    private static boolean findingPatternToAvoid() {
         final String patternToAvoid = "[,]+";
         boolean foundedPattern = false;
         String commaThrouble = null;
@@ -63,9 +66,9 @@ public class Entry {
 
         while (readedFloat == 0f) {
             if (inputScanner.hasNext()) {
-                if(findingPatternToAvoid()){
+                if (findingPatternToAvoid()) {
                     System.out.println("Format error.\n" + question);
-                     inputScanner.next();
+                    inputScanner.next();
                 } else {
 
                     try {
@@ -87,10 +90,10 @@ public class Entry {
 
         while (readedDouble == 0) {
             if (inputScanner.hasNext()) {
-                if(findingPatternToAvoid()){
+                if (findingPatternToAvoid()) {
                     System.out.println("Format error.\n" + question);
                     inputScanner.next();
-                } else  {
+                } else {
                     try {
                         readedDouble = inputScanner.nextDouble();
 
@@ -103,6 +106,84 @@ public class Entry {
             }
         }
         return readedDouble;
+    }
+
+
+    static char readChar(String question) {
+        char readedChar = ' ';
+
+        System.out.println(question);
+        while (readedChar == ' ') {
+            String readedCharString = "";
+            if (inputScanner.hasNext()) {
+                try {
+                    readedCharString = inputScanner.next();
+                    if (readedCharString.length() > 1) {
+                        System.out.println("Format error.\n" + question);
+                        inputScanner.nextLine();
+                    }else {
+                        readedChar = readedCharString.charAt(0);
+                    }
+                } catch (InputPersonalicedMismatchException e) {
+                    System.out.println("Incorrect type.\n" + question);
+                    inputScanner.nextLine();
+                }
+            }
+        }
+
+        return readedChar;
+    }
+
+    static String readString(String question) {
+        String readedString = "";
+        System.out.println(question);
+
+        while (readedString == "") {
+            if (inputScanner.hasNext()) {
+                try {
+                    readedString = inputScanner.next();
+
+                } catch (InputPersonalicedMismatchException e) {
+                    System.out.println("Incorrect type.\n" + question);
+                    inputScanner.next();
+                }
+            }
+        }
+        return readedString;
+    }
+
+    static boolean readBoolean(String question) {
+        Boolean readedBoolean = null;
+        String stringBoolean = "";
+        System.out.println(question);
+
+        while (readedBoolean == null) {
+
+            if (inputScanner.hasNext()) {
+
+                try {
+                    stringBoolean = inputScanner.next();
+
+                    if(!stringBoolean.matches("^[YyNn]$")) {
+                        System.out.println("Incorrect, yo must introduce Y o N.\n" + question);
+                        inputScanner.nextLine();
+                    }
+
+                    if(stringBoolean.equalsIgnoreCase("N")){
+                        readedBoolean = false;
+                    }else if(stringBoolean.equalsIgnoreCase("Y")){
+                        readedBoolean = true;
+                    }
+
+                } catch (InputPersonalicedMismatchException e) {
+                    System.out.println("Incorrect type.\n" + question);
+                    inputScanner.next();
+                }
+
+
+            }
+        }
+        return readedBoolean.booleanValue();
     }
 
 }
