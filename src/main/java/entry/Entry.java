@@ -2,10 +2,7 @@ package entry;
 
 import java.util.InputMismatchException;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Scanner;
-
-import static java.lang.Boolean.parseBoolean;
 
 public class Entry {
     static Scanner inputScanner = new Scanner(System.in).useLocale(Locale.US);
@@ -84,7 +81,7 @@ public class Entry {
         return readedFloat;
     }
 
-    public static Double readDouble(String question) {
+    static Double readDouble(String question) {
         Double readedDouble = 0.0;
         System.out.println(question);
 
@@ -108,7 +105,6 @@ public class Entry {
         return readedDouble;
     }
 
-
     static char readChar(String question) {
         char readedChar = ' ';
 
@@ -121,7 +117,7 @@ public class Entry {
                     if (readedCharString.length() > 1) {
                         System.out.println("Format error.\n" + question);
                         inputScanner.nextLine();
-                    }else {
+                    } else {
                         readedChar = readedCharString.charAt(0);
                     }
                 } catch (InputPersonalicedMismatchException e) {
@@ -164,14 +160,14 @@ public class Entry {
                 try {
                     stringBoolean = inputScanner.next();
 
-                    if(!stringBoolean.matches("^[YyNn]$")) {
+                    if (!stringBoolean.matches("^[YyNn]$")) {
                         System.out.println("Incorrect, yo must introduce Y o N.\n" + question);
                         inputScanner.nextLine();
                     }
 
-                    if(stringBoolean.equalsIgnoreCase("N")){
+                    if (stringBoolean.equalsIgnoreCase("N")) {
                         readedBoolean = false;
-                    }else if(stringBoolean.equalsIgnoreCase("Y")){
+                    } else if (stringBoolean.equalsIgnoreCase("Y")) {
                         readedBoolean = true;
                     }
 
@@ -179,11 +175,8 @@ public class Entry {
                     System.out.println("Incorrect type.\n" + question);
                     inputScanner.next();
                 }
-
-
             }
         }
         return readedBoolean.booleanValue();
     }
-
 }
