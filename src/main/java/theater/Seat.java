@@ -1,6 +1,6 @@
 package theater;
 
-public class Seat {
+class Seat {
     private int fileNum;
     private  int seatNum;
     private String reservedName;
@@ -11,19 +11,19 @@ public class Seat {
         this.reservedName = reservedName;
     }
 
-    public int getFileNum() {
+    protected int getFileNum() {
         return fileNum;
     }
 
-    public int getSeatNum() {
+    protected int getSeatNum() {
         return seatNum;
     }
 
-    public String getReservedName() {
+    protected String getReservedName() {
         return reservedName;
     }
 
-    public String equals(){
+    protected String equals(){
         String equalSeats = "";
 
         return equalSeats;

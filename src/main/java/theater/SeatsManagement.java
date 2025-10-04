@@ -2,18 +2,18 @@ package theater;
 
 import java.util.ArrayList;
 
-public class SeatsManagement {
+class SeatsManagement {
     ArrayList<Seat> seatsArray;
 
     public SeatsManagement() {
         seatsArray = new ArrayList <Seat>();
     }
 
-    public ArrayList getSeats() {
+    protected ArrayList <Seat> getSeats() {
         return seatsArray;
     }
 
-    void addSeat(Seat seat) {
+    protected void addSeat(Seat seat) {
         try{
             int seatIndex = searchSeat(seat.getFileNum(),seat.getSeatNum());
             if(seatIndex != -1){
@@ -24,7 +24,7 @@ public class SeatsManagement {
         }
     }
 
-    void deleteSeat(int fileNum, int seatNum) {
+    protected void deleteSeat(int fileNum, int seatNum) {
         try{
             int seatIndex = searchSeat(fileNum,seatNum);
             if(seatIndex == -1){
@@ -36,7 +36,7 @@ public class SeatsManagement {
 
     }
 
-    private int searchSeat(int fileNum, int seatNum) {
+    protected int searchSeat(int fileNum, int seatNum) {
         Seat searchedSeat;
         int seatsIndex = -1;
         try {
