@@ -2,6 +2,8 @@ package theater;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 class TheaterManagement {
     Theater theater;
@@ -42,13 +44,13 @@ class TheaterManagement {
     protected String showReservedSeatsOnePerson() {
         String name = askNameReservation();
 
-        ArrayList <Seat> reservedSeats;
+        List<Seat> reservedSeats;
 
         if(!Validation.noReservationsYet(this.theater.seatsManagement.getSeats())){
 
-            reservedSeats = (ArrayList<Seat>) this.theater.seatsManagement.seatsArray.stream()
-                    .filter(seat -> name == name );
-
+            reservedSeats = this.theater.seatsManagement.seatsArray.stream()
+                    .filter(seat -> seat.getReservedName() == name ).toList();
+            System.out.println(reservedSeats);
         }else{
             return NORESERVATIONSYET;
         }

@@ -3,7 +3,7 @@ package theater;
 import java.util.ArrayList;
 
 class SeatsManagement {
-    ArrayList seatsArray;
+    ArrayList <Seat> seatsArray;
 
     public SeatsManagement() {
         seatsArray = new ArrayList <Seat>();
@@ -14,14 +14,15 @@ class SeatsManagement {
     }
 
     protected void addSeat(Seat seat) throws InUseSeatException{
-        try{
-            int seatIndex = searchSeat(seat.getRowNum(),seat.getSeatNum());
-            if(seatIndex == -1){
-                seatsArray.add(seat);
-            }
-        }catch (InUseSeatException e){
+
+        int seatIndex = searchSeat(seat.getRowNum(),seat.getSeatNum());
+        System.out.println( "\n"+seatIndex + "\n"+ seat.getRowNum() +"--" +seat.getSeatNum());
+        if(seatIndex == -1){
+            seatsArray.add(seat);
+        }else {
             throw new InUseSeatException("The seat was already in use");
         }
+
     }
 
     protected void deleteSeat(int rowNum, int seatNum) {
@@ -40,8 +41,9 @@ class SeatsManagement {
         Seat searchedSeat;
         int seatsIndex = -1;
         try {
-            searchedSeat = (Seat) seatsArray.stream()
-                    .filter(seat ->  rowNum == rowNum && seatNum== seatNum).findFirst().orElse(null);
+            searchedSeat = seatsArray.stream()
+                    .filter(seat -> seat.getRowNum() == rowNum && seat.getSeatNum() == seatNum)
+                    .findFirst().orElse(null);
 
             if(searchedSeat != null) {
                 seatsIndex = seatsArray.indexOf(searchedSeat);

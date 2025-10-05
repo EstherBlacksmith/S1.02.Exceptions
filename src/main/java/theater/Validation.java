@@ -29,12 +29,12 @@ class Validation {
     }
 
     protected static void maxRowsExceeded(int numRow, int maxRowsTheater){
-        if (maxRowsTheater <= numRow) {
+        if (maxRowsTheater < numRow) {
             throw new IncorrectRowException("There aren't that many rows");
         }
     }
     protected static void maxSeatsExceeded(int numSeat, int maxSeatPerRowTheater){
-        if (maxSeatPerRowTheater <= numSeat) {
+        if (maxSeatPerRowTheater < numSeat) {
             throw new IncorrectSeatException("There aren't that many seats");
         }
     }
