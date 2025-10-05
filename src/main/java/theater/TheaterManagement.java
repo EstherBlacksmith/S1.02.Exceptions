@@ -86,7 +86,6 @@ class TheaterManagement {
 
     protected String cancelSeatReservation() {
         ArrayList <Seat> reservedSeats;
-        int removedReservations = 0;
 
         if(!Validation.noReservationsYet(this.theater.seatsManagement.getSeats())){
             reservedSeats = this.theater.seatsManagement.getSeats();
@@ -100,6 +99,21 @@ class TheaterManagement {
     }
 
     protected void reserveSeat() {
+        String question = "Indicate the line";
+        Scanner inputScan = new Scanner(System.in);
+        int line = Validation.validateInt(question,inputScan);
 
+
+        question = "Indicate the seat";
+        int seat = Validation.validateInt(question,inputScan);
+
+        question = "Indicate the name";
+        String name = Validation.validateString(question,inputScan);
+
+        inputScan.close();
+
+        Seat seatAdded = new Seat(line,seat,name);
+        this.theater.seatsManagement.addSeat(seatAdded);
+        System.out.println("Seat added correctly:\n" + seatAdded.toString());
     }
 }
