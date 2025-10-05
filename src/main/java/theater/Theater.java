@@ -1,65 +1,67 @@
 package theater;
 
-import java.util.Scanner;
 
 class Theater {
-    int numFilesPerTheater;
-    int numSeatsPerFile;
+    int numRowsPerTheater;
+    int numSeatsPerRow;
     SeatsManagement seatsManagement;
     TheaterManagement theaterManagement;
 
     public Theater() {
         seatsManagement = new SeatsManagement();
-        theaterManagement = new TheaterManagement(new Theater());
+        theaterManagement = new TheaterManagement(this);
         askInitialData();
     }
 
     protected void askInitialData() {
-        Scanner inputScanner = new Scanner(System.in);
+
         String question = "";
 
-        while (numFilesPerTheater == 0) {
-            question = "Indicate the files number ine the theater";
-            numFilesPerTheater = Validation.validateInt(question, inputScanner);
+        while (numRowsPerTheater == 0) {
+            question = "Indicate the rows number in the theater";
+            numRowsPerTheater = Validation.validateInt(question);
         }
-        while (numSeatsPerFile == 0) {
-            question = "Indicate the seats number per file";
-            numSeatsPerFile = Validation.validateInt(question, inputScanner);
+        while (numSeatsPerRow == 0) {
+            question = "Indicate the seats number per row";
+            numSeatsPerRow = Validation.validateInt(question);
         }
 
-        if (inputScanner != null){
-            inputScanner.close();
-        }
     }
 
-    protected void init(){
+    protected void init() {
         askInitialData();
+        int option = -1;
 
-        int option = theaterManagement.menu();
+        do {
+            option = theaterManagement.menu();
 
-        switch (option){
-            case 0 -> {
-                return;
-            }
-            case 1 -> {
-                theaterManagement.showReservedSeats();
-            }
-            case 2 ->{
-                theaterManagement.showReservedSeatsOnePerson();
-            }
-            case 3 -> {
-                theaterManagement.reserveSeat();
-            }
-            case 4 -> {
-                theaterManagement.cancelSeatReservation();
-            }
+            switch (option) {
+                case 0 -> {
+                    return;
+                }
+                case 1 -> {
+                    System.out.println(theaterManagement.showReservedSeats());
+                }
+                case 2 -> {
+                    System.out.println(theaterManagement.showReservedSeatsOnePerson());
+                }
+                case 3 -> {
+                    theaterManagement.reserveSeat();
+                }
+                case 4 -> {
+                    System.out.println(theaterManagement.cancelSeatReservation());
+                }
 
-            case 5 ->{
-                theaterManagement.cancelAllReservedSeatsOnePerson();
-            }
-            default -> {return;}
+                case 5 -> {
+                    System.out.println(theaterManagement.cancelAllReservedSeatsOnePerson());
+                }
+                default -> {
+                    System.out.println("Incorrect menu option.");
+                }
 
-        }
+            }
+        } while (option != 0);
+
     }
 
 

@@ -4,11 +4,12 @@ import entry.InputPersonalicedMismatchException;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.Scanner;
+
+import static theater.Main.inputScanner;
 
 class Validation {
 
-    protected static int validateInt(String question, Scanner inputScanner){
+    protected static int validateInt(String question){
         int readedInt = 0;
         System.out.println(question);
 
@@ -27,18 +28,14 @@ class Validation {
         return readedInt;
     }
 
-    protected static boolean maxLinesExceeded (int numLine, int maxLinesTheater){
-        if (maxLinesTheater <= numLine) {
-            return true;
-        }else {
-            return false;
+    protected static void maxRowsExceeded(int numRow, int maxRowsTheater){
+        if (maxRowsTheater <= numRow) {
+            throw new IncorrectRowException("There aren't that many rows");
         }
     }
-    protected static boolean maxSeatsExceeded(int numSeat, int maxSeatPerLineTheater){
-        if (maxSeatPerLineTheater <= numSeat) {
-            return true;
-        }else {
-            return false;
+    protected static void maxSeatsExceeded(int numSeat, int maxSeatPerRowTheater){
+        if (maxSeatPerRowTheater <= numSeat) {
+            throw new IncorrectSeatException("There aren't that many seats");
         }
     }
 
@@ -49,7 +46,7 @@ class Validation {
             return false;
         }
     }
-    protected static String validateString(String question, Scanner inputScanner){
+    protected static String validateString(String question){
         String readedString = "";
         System.out.println(question);
 
@@ -57,10 +54,12 @@ class Validation {
             if (inputScanner.hasNext()) {
                 try {
                     readedString = inputScanner.next();
-
+                    if(readedString.matches(".*\\d.*")){
+                        throw new IncorrectPersonNameException("The name must not contain numbers");
+                    }
                 } catch (InputPersonalicedMismatchException e) {
                     System.out.println("Incorrect type.\n" + question);
-                    inputScanner.next();
+                    inputScanner.nextLine();
                 }
             }
         }

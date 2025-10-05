@@ -2,7 +2,6 @@ package theater;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Scanner;
 
 class TheaterManagement {
     Theater theater;
@@ -14,6 +13,7 @@ class TheaterManagement {
 
     protected int menu() {
         int option = 0;
+
         String question =
                 "Please select an option:\n" +
                 "1.- Show all the reserved seats.\n" +
@@ -23,16 +23,14 @@ class TheaterManagement {
                 "5.- Cancel all reservation for a person.\n" +
                 "0.- Exit.";
 
-        Scanner inputScan = new Scanner(System.in);
-        Validation.validateInt(question,inputScan);
-
-        inputScan.close();
+            option = Validation.validateInt(question);
 
         return option;
     }
 
     protected String showReservedSeats() {
         String reservedSeats = "";
+
         if(!Validation.noReservationsYet(this.theater.seatsManagement.getSeats())){
             reservedSeats = this.theater.seatsManagement.getSeats().toString();
         }else{
@@ -44,12 +42,12 @@ class TheaterManagement {
     protected String showReservedSeatsOnePerson() {
         String name = askNameReservation();
 
-        ArrayList <Seat> reservedSeats = new ArrayList<>();
+        ArrayList <Seat> reservedSeats;
 
         if(!Validation.noReservationsYet(this.theater.seatsManagement.getSeats())){
 
             reservedSeats = (ArrayList<Seat>) this.theater.seatsManagement.seatsArray.stream()
-                    .filter(seat -> seat.getReservedName() == name );
+                    .filter(seat -> name == name );
 
         }else{
             return NORESERVATIONSYET;
@@ -58,11 +56,21 @@ class TheaterManagement {
     }
 
     private String askNameReservation() {
-        Scanner inputScan = new Scanner(System.in);
-        String question = "Indicate the name the reservation is made";
-        String name = Validation.validateString(question,inputScan);
-        inputScan.close();
+        String question = "Indicate the name under the reservation is made";
+        String name = Validation.validateString(question);
         return name;
+    }
+
+    private int askRowReservation(){
+        String question = "Indicate the row";
+        int row = Validation.validateInt(question);
+        return row;
+    }
+
+    private int askSeatReservation(){
+        String question = "Indicate the seat";
+        int seat = Validation.validateInt(question);
+        return seat;
     }
 
     protected String cancelAllReservedSeatsOnePerson() {
@@ -85,35 +93,34 @@ class TheaterManagement {
     }
 
     protected String cancelSeatReservation() {
-        ArrayList <Seat> reservedSeats;
 
         if(!Validation.noReservationsYet(this.theater.seatsManagement.getSeats())){
-            reservedSeats = this.theater.seatsManagement.getSeats();
-            reservedSeats.clear();
-            return "All reservations has been cancelled";
+            int row = askRowReservation();
+            int seat = askSeatReservation();
+            this.theater.seatsManagement.deleteSeat(row,seat);
+
+            return "Reservation has been cancelled";
         }else{
             return NORESERVATIONSYET;
-
         }
-
     }
 
     protected void reserveSeat() {
-        String question = "Indicate the line";
-        Scanner inputScan = new Scanner(System.in);
-        int line = Validation.validateInt(question,inputScan);
+        int row = askRowReservation();
+        Validation.maxRowsExceeded(row, this.theater.numRowsPerTheater);
 
+        int seat = askSeatReservation();
+        Validation.maxSeatsExceeded(seat,this.theater.numSeatsPerRow);
 
-        question = "Indicate the seat";
-        int seat = Validation.validateInt(question,inputScan);
+        String name = askNameReservation();
 
-        question = "Indicate the name";
-        String name = Validation.validateString(question,inputScan);
+        Seat seatToAdd = new Seat(row,seat,name);
+       try{
+           this.theater.seatsManagement.addSeat(seatToAdd);
+           System.out.println("Seat added correctly:\n" + seatToAdd.toString());
+       } catch (InUseSeatException e) {
+           System.out.println( e.getMessage());
+       }
 
-        inputScan.close();
-
-        Seat seatAdded = new Seat(line,seat,name);
-        this.theater.seatsManagement.addSeat(seatAdded);
-        System.out.println("Seat added correctly:\n" + seatAdded.toString());
     }
 }

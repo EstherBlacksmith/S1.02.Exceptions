@@ -1,9 +1,9 @@
 package theater;
 
-public class InUseSeatException extends RuntimeException {
+public class IncorrectSeatException extends RuntimeException {
     private String message = null;
 
-    public InUseSeatException(String message) {
+    public IncorrectSeatException(String message) {
         super(message);
         this.message = message;
     }

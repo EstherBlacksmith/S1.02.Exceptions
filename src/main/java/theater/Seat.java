@@ -11,7 +11,7 @@ class Seat {
         this.reservedName = reservedName;
     }
 
-    protected int getFileNum() {
+    protected int getRowNum() {
         return fileNum;
     }
 
