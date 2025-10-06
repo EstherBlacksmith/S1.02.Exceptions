@@ -37,6 +37,7 @@ class Theater {
 
             switch (option) {
                 case 0 -> {
+                    System.out.println("Exit");
                     return;
                 }
                 case 1 -> {
@@ -61,6 +62,7 @@ class Theater {
 
             }
         } while (option != 0);
+
 
     }
 

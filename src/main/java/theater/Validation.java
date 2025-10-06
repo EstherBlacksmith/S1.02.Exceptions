@@ -10,10 +10,10 @@ import static theater.Main.inputScanner;
 class Validation {
 
     protected static int validateInt(String question){
-        int readedInt = 0;
+        int readedInt = -1;
         System.out.println(question);
 
-        while (readedInt == 0) {
+        while (readedInt == -1) {
             if (inputScanner.hasNext()) {
                 try {
                     readedInt = inputScanner.nextInt();
