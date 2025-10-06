@@ -1,9 +1,9 @@
 package theater;
 
 class Seat {
-    private int fileNum;
-    private  int seatNum;
-    private String reservedName;
+    private final int fileNum;
+    private final int seatNum;
+    private final String reservedName;
 
     public Seat(int fileNum, int seatNum, String reservedName) {
         this.fileNum = fileNum;
@@ -23,8 +23,13 @@ class Seat {
         return reservedName;
     }
 
-    protected String equals(){
-        String equalSeats = "";
+    protected boolean equals(Seat seatOne, Seat seatTwo){
+        boolean equalSeats = false ;
+
+        if(seatOne.fileNum == seatTwo.fileNum
+                && seatOne.seatNum == seatTwo.seatNum){
+            equalSeats = true;
+        }
 
         return equalSeats;
     }

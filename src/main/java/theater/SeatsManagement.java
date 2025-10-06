@@ -16,7 +16,7 @@ class SeatsManagement {
     protected void addSeat(Seat seat) throws InUseSeatException{
 
         int seatIndex = searchSeat(seat.getRowNum(),seat.getSeatNum());
-        System.out.println( "\n"+seatIndex + "\n"+ seat.getRowNum() +"--" +seat.getSeatNum());
+
         if(seatIndex == -1){
             seatsArray.add(seat);
         }else {
@@ -28,7 +28,7 @@ class SeatsManagement {
     protected void deleteSeat(int rowNum, int seatNum) {
         try{
             int seatIndex = searchSeat(rowNum,seatNum);
-            if(seatIndex == -1){
+            if(seatIndex != -1){
                 seatsArray.remove(seatIndex);
             }
         }catch (FreeSeatException e){
