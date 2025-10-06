@@ -5,14 +5,9 @@ public class Management {
 
         Sale sale = new Sale();
 
-        Product tshirt = new Product();
-        tshirt.setName("shirt");
-        tshirt.setPrice(10.10);
+        Product tshirt = new Product("shirt", 10.10);
 
-
-        Product tshirt2 = new Product();
-        tshirt2.setName("shirt2");
-        tshirt2.setPrice(20.20);
+        Product tshirt2 = new Product("shirt2",20.20);
 
         Product gauntlet = new Product();
         gauntlet.setName("gauntlet");
