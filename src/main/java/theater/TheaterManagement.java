@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 class TheaterManagement {
     Theater theater;
 
-    final static String NORESERVATIONSYET =  "There is not reservations yet";
+    final static String NORESERVATIONSYET = "There is not reservations yet";
+
     public TheaterManagement(Theater theater) {
         this.theater = theater;
     }
@@ -18,14 +19,14 @@ class TheaterManagement {
 
         String question =
                 "Please select an option:\n" +
-                "1.- Show all the reserved seats.\n" +
-                "2.- Show all the reserved seats of one person.\n" +
-                "3.- Reserve a seat.\n" +
-                "4.- Cancel the reservation for a seat.\n" +
-                "5.- Cancel all reservation for a person.\n" +
-                "0.- Exit.";
+                        "1.- Show all the reserved seats.\n" +
+                        "2.- Show all the reserved seats of one person.\n" +
+                        "3.- Reserve a seat.\n" +
+                        "4.- Cancel the reservation for a seat.\n" +
+                        "5.- Cancel all reservation for a person.\n" +
+                        "0.- Exit.";
 
-            option = Validation.validateInt(question);
+        option = Validation.validateInt(question);
 
         return option;
     }
@@ -33,9 +34,9 @@ class TheaterManagement {
     protected String showReservedSeats() {
         String reservedSeats = "";
 
-        if(!Validation.noReservationsYet(this.theater.seatsManagement.getSeats())){
+        if (!Validation.noReservationsYet(this.theater.seatsManagement.getSeats())) {
             reservedSeats = this.theater.seatsManagement.getSeats().toString();
-        }else{
+        } else {
             reservedSeats = NORESERVATIONSYET;
         }
         return reservedSeats;
@@ -46,12 +47,12 @@ class TheaterManagement {
 
         List<Seat> reservedSeats;
 
-        if(!Validation.noReservationsYet(this.theater.seatsManagement.getSeats())){
+        if (!Validation.noReservationsYet(this.theater.seatsManagement.getSeats())) {
 
             reservedSeats = this.theater.seatsManagement.seatsArray.stream()
-                    .filter(seat -> seat.getReservedName() == name ).toList();
+                    .filter(seat -> seat.getReservedName() == name).toList();
             System.out.println(reservedSeats);
-        }else{
+        } else {
             return NORESERVATIONSYET;
         }
         return reservedSeats.toString();
@@ -63,13 +64,13 @@ class TheaterManagement {
         return name;
     }
 
-    private int askRowReservation(){
+    private int askRowReservation() {
         String question = "Indicate the row";
         int row = Validation.validateInt(question);
         return row;
     }
 
-    private int askSeatReservation(){
+    private int askSeatReservation() {
         String question = "Indicate the seat";
         int seat = Validation.validateInt(question);
         return seat;
@@ -77,17 +78,17 @@ class TheaterManagement {
 
     protected String cancelAllReservedSeatsOnePerson() {
         String name = askNameReservation();
-        ArrayList <Seat> reservedSeats;
+        ArrayList<Seat> reservedSeats;
         int removedReservations = 0;
-        if(!Validation.noReservationsYet(this.theater.seatsManagement.getSeats())){
+        if (!Validation.noReservationsYet(this.theater.seatsManagement.getSeats())) {
             reservedSeats = this.theater.seatsManagement.getSeats();
 
-           Iterator <Seat> iterator = reservedSeats.iterator() ;
+            Iterator<Seat> iterator = reservedSeats.iterator();
 
-            while(iterator.hasNext()){
-                if(iterator.next().getReservedName().equalsIgnoreCase(name)){
+            while (iterator.hasNext()) {
+                if (iterator.next().getReservedName().equalsIgnoreCase(name)) {
                     iterator.remove();
-                    removedReservations ++;
+                    removedReservations++;
                 }
             }
         }
@@ -96,33 +97,52 @@ class TheaterManagement {
 
     protected String cancelSeatReservation() {
 
-        if(!Validation.noReservationsYet(this.theater.seatsManagement.getSeats())){
+        if (!Validation.noReservationsYet(this.theater.seatsManagement.getSeats())) {
             int row = askRowReservation();
             int seat = askSeatReservation();
-            this.theater.seatsManagement.deleteSeat(row,seat);
+            this.theater.seatsManagement.deleteSeat(row, seat);
 
             return "Reservation has been cancelled";
-        }else{
+        } else {
             return NORESERVATIONSYET;
         }
     }
 
     protected void reserveSeat() {
-        int row = askRowReservation();
-        Validation.maxRowsExceeded(row, this.theater.numRowsPerTheater);
+        boolean correctAnswer = false;
+        int row = 0;
+        while (!correctAnswer) {
+             row = askRowReservation();
 
-        int seat = askSeatReservation();
-        Validation.maxSeatsExceeded(seat,this.theater.numSeatsPerRow);
+            try {
+                Validation.maxRowsExceeded(row, this.theater.numRowsPerTheater);
+                correctAnswer = true;
+            } catch (IncorrectRowException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        correctAnswer = false;
+        int seat = 0;
+        while (!correctAnswer) {
+            try {
+                seat = askSeatReservation();
+                Validation.maxSeatsExceeded(seat, this.theater.numSeatsPerRow);
+                correctAnswer = true;
+            } catch (IncorrectSeatException e) {
+                System.out.println(e.getMessage());
+            }
+        }
 
         String name = askNameReservation();
 
-        Seat seatToAdd = new Seat(row,seat,name);
-       try{
-           this.theater.seatsManagement.addSeat(seatToAdd);
-           System.out.println("Seat added correctly:\n" + seatToAdd.toString());
-       } catch (InUseSeatException e) {
-           System.out.println( e.getMessage());
-       }
+        Seat seatToAdd = new Seat(row, seat, name);
+        try {
+            this.theater.seatsManagement.addSeat(seatToAdd);
+            System.out.println("Seat added correctly:\n" + seatToAdd.toString());
+        } catch (InUseSeatException e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 }

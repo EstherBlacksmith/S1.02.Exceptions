@@ -28,7 +28,7 @@ class Validation {
         return readedInt;
     }
 
-    protected static void maxRowsExceeded(int numRow, int maxRowsTheater){
+    protected static void maxRowsExceeded(int numRow, int maxRowsTheater) throws IncorrectRowException{
         if (maxRowsTheater < numRow) {
             throw new IncorrectRowException("There aren't that many rows");
         }
