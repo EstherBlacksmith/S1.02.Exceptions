@@ -13,10 +13,6 @@ public class Sale {
         return totalPrice;
     }
 
-    public List <Product> getProductList() {
-        return productList;
-    }
-
     public void addProduct(Product product){
         productList.add(product);
     }

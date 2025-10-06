@@ -6,20 +6,10 @@ public class Management {
         Sale sale = new Sale();
 
         Product tshirt = new Product("shirt", 10.10);
-
         Product tshirt2 = new Product("shirt2",20.20);
-
-        Product gauntlet = new Product();
-        gauntlet.setName("gauntlet");
-        gauntlet.setPrice(30.30);
-
-        Product skirt = new Product();
-        skirt.setName("skirt");
-        skirt.setPrice(40.40);
-
-        Product panties = new Product();
-        panties.setName("panties");
-        panties.setPrice(55);
+        Product gauntlet = new Product("gauntlet",30.30);
+        Product skirt = new Product("skirt",40.40);
+        Product panties = new Product("panties",55);
 
         sale.addProduct(tshirt);
         sale.addProduct(tshirt2);

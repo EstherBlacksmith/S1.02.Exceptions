@@ -1,16 +1,15 @@
 package sale;
 
 public class Product {
-
-
+    private String name;
+    private double price;
 
     public Product() {
     }
 
-    private String name;
-
-    public String getName() {
-        return name;
+    public Product(String name, double price) {
+        this.name = name;
+        this.price = price;
     }
 
     public void setName(String name) {
@@ -25,5 +24,4 @@ public class Product {
         this.price = price;
     }
 
-    private double price;
 }
